@@ -9,14 +9,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "server/index.js"
+      "dest": "/server/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "public/$1"
+      "dest": "/public/index.html"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
-} 
+  ]
+}

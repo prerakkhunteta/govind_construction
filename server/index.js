@@ -211,7 +211,13 @@ app.delete('/api/houses/:id/images/:imageIndex', (req, res) => {
     res.json(house);
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Open http://localhost:${PORT} in your browser`);
-}); 
+// For Vercel deployment
+module.exports = app;
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+        console.log(`Open http://localhost:${PORT} in your browser`);
+    });
+} 
