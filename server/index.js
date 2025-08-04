@@ -50,7 +50,7 @@ app.get('/api/health', (req, res) => {
         status: 'OK',
         timestamp: new Date().toISOString(),
         cloudinary: {
-            configured: isCloudinaryConfigured
+            configured: Boolean(isCloudinaryConfigured)
         }
     });
 });
