@@ -221,3 +221,6 @@ if (process.env.NODE_ENV !== 'production') {
         console.log(`Open http://localhost:${PORT} in your browser`);
     });
 } 
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
