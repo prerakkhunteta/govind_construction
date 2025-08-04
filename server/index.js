@@ -5,7 +5,7 @@ const multer = require('multer');
 const path = require('path');
 require('dotenv').config();
 
-const { storage } = require('./cloudinaryConfig'); // Import Cloudinary storage
+const { storage, isCloudinaryConfigured } = require('./cloudinaryConfig'); // Import Cloudinary storage
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -44,6 +44,17 @@ let nextId = 1;
 
 // --- API Routes ---
 
+// Health check
+app.get('/api/health', (req, res) => {
+    res.json({
+        status: 'OK',
+        timestamp: new Date().toISOString(),
+        cloudinary: {
+            configured: isCloudinaryConfigured
+        }
+    });
+});
+
 // Auth Routes
 app.get('/api/check-auth', (req, res) => {
     res.json({ isAdmin: !!req.session.isAdmin });
@@ -71,11 +82,28 @@ app.post('/api/logout', (req, res) => {
 
 // Image Upload Route
 app.post('/api/upload', upload.array('images', 10), (req, res) => {
-    if (!req.files || req.files.length === 0) {
-        return res.status(400).json({ error: 'No files uploaded.' });
+    try {
+        if (!req.files || req.files.length === 0) {
+            return res.status(400).json({ error: 'No files uploaded.' });
+        }
+
+        // Check if Cloudinary is configured
+        if (!isCloudinaryConfigured) {
+            console.error('Cloudinary environment variables missing:', {
+                cloud_name: !!process.env.CLOUDINARY_CLOUD_NAME,
+                api_key: !!process.env.CLOUDINARY_API_KEY,
+                api_secret: !!process.env.CLOUDINARY_API_SECRET
+            });
+            return res.status(500).json({ error: 'Cloudinary configuration missing. Please set environment variables in Render.' });
+        }
+
+        const imageUrls = req.files.map(file => file.path); // Returns the Cloudinary URLs
+        console.log('Uploaded images:', imageUrls);
+        res.json({ success: true, imageUrls });
+    } catch (error) {
+        console.error('Upload error:', error);
+        res.status(500).json({ error: 'Upload failed: ' + error.message });
     }
-    const imageUrls = req.files.map(file => file.path); // Returns the Cloudinary URLs
-    res.json({ success: true, imageUrls });
 });
 
 // House CRUD Routes
