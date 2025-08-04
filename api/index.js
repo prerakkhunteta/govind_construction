@@ -4,6 +4,7 @@ const session = require('express-session');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
+const { storage } = require('../server/cloudinaryConfig');
 
 const app = express();
 
@@ -11,23 +12,7 @@ const app = express();
 let houses = [];
 let nextId = 1;
 
-// Create uploads directory if it doesn't exist
-const uploadsDir = path.join(__dirname, '../server/uploads');
-if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
-// Configure multer for file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadsDir);
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-    }
-});
-
+// Configure multer to use Cloudinary storage
 const upload = multer({ storage: storage });
 
 // Basic middleware
@@ -45,7 +30,6 @@ app.use(session({
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public')));
-app.use('/uploads', express.static(uploadsDir));
 
 // All your API routes here (copy from server/index.js)
 app.get('/api/health', (req, res) => {
@@ -144,7 +128,8 @@ app.post('/api/upload', upload.array('images', 10), (req, res) => {
     if (!req.files || req.files.length === 0) {
         return res.status(400).json({ error: 'No image files provided' });
     }
-    const imageUrls = req.files.map(file => `/uploads/${file.filename}`);
+    // Extract Cloudinary URLs from uploaded files
+    const imageUrls = req.files.map(file => file.path);
     res.json({ success: true, imageUrls });
 });
 

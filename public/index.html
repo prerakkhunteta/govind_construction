@@ -47,6 +47,7 @@
 
         .login-form {
             background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             padding: 40px;
             border-radius: 20px;
@@ -58,6 +59,7 @@
 
         .house-form {
             background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 20px;
@@ -125,6 +127,7 @@
 
         .house-card {
             background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 0;
@@ -651,31 +654,31 @@
         <div id="addHouseForm" class="house-form admin-only" style="display: none;">
             <h3 style="margin-bottom: 25px; color: #1f2937;">Add New House</h3>
             <div class="form-group">
-                <label>Title:</label>
-                <input type="text" id="houseTitle" required>
+                <label for="houseTitle">Title:</label>
+                <input type="text" id="houseTitle" aria-label="House Title" required>
             </div>
             <div class="form-group">
-                <label>Price:</label>
-                <input type="number" id="housePrice" required>
+                <label for="housePrice">Price:</label>
+                <input type="number" id="housePrice" aria-label="House Price" required>
             </div>
             <div class="form-group">
-                <label>Address:</label>
-                <input type="text" id="houseAddress" required>
+                <label for="houseAddress">Address:</label>
+                <input type="text" id="houseAddress" aria-label="House Address" required>
             </div>
             <div class="form-group">
-                <label>Description:</label>
-                <textarea id="houseDescription" rows="3"></textarea>
+                <label for="houseDescription">Description:</label>
+                <textarea id="houseDescription" rows="3" aria-label="House Description"></textarea>
             </div>
             <div class="form-group">
-                <label>Status:</label>
-                <select id="houseStatus">
+                <label for="houseStatus">Status:</label>
+                <select id="houseStatus" aria-label="House Status">
                     <option value="available">Available</option>
                     <option value="sold">Sold</option>
                 </select>
             </div>
             <div class="form-group">
-                <label>Images (Select multiple):</label>
-                <input type="file" id="houseImages" accept="image/*" multiple>
+                <label for="houseImages">Images (Select multiple):</label>
+                <input type="file" id="houseImages" accept="image/*" multiple aria-label="House Images">
                 <div id="imagePreview" class="image-preview"></div>
             </div>
             <button onclick="addHouse()">Add House</button>
@@ -700,24 +703,24 @@
                 <span class="close-modal" onclick="closeEditModal()">&times;</span>
             </div>
             <div class="form-group">
-                <label>Title:</label>
-                <input type="text" id="editTitle" required>
+                <label for="editTitle">Title:</label>
+                <input type="text" id="editTitle" aria-label="House Title" required>
             </div>
             <div class="form-group">
-                <label>Price:</label>
-                <input type="number" id="editPrice" required>
+                <label for="editPrice">Price:</label>
+                <input type="number" id="editPrice" aria-label="House Price" required>
             </div>
             <div class="form-group">
-                <label>Address:</label>
-                <input type="text" id="editAddress" required>
+                <label for="editAddress">Address:</label>
+                <input type="text" id="editAddress" aria-label="House Address" required>
             </div>
             <div class="form-group">
-                <label>Description:</label>
-                <textarea id="editDescription" rows="3"></textarea>
+                <label for="editDescription">Description:</label>
+                <textarea id="editDescription" rows="3" aria-label="House Description"></textarea>
             </div>
             <div class="form-group">
-                <label>Status:</label>
-                <select id="editStatus">
+                <label for="editStatus">Status:</label>
+                <select id="editStatus" aria-label="House Status">
                     <option value="available">Available</option>
                     <option value="sold">Sold</option>
                 </select>
@@ -731,8 +734,8 @@
 
             <!-- Add New Images -->
             <div class="form-group">
-                <label>Add New Images:</label>
-                <input type="file" id="editImages" accept="image/*" multiple>
+                <label for="editImages">Add New Images:</label>
+                <input type="file" id="editImages" accept="image/*" multiple aria-label="House Images">
                 <div id="editImagePreview" class="image-preview"></div>
             </div>
 
@@ -749,12 +752,12 @@
                 <span class="close-modal" onclick="closeLoginModal()">&times;</span>
             </div>
             <div class="form-group">
-                <label>Username:</label>
-                <input type="text" id="username" placeholder="Enter username">
+                <label for="username">Username:</label>
+                <input type="text" id="username" aria-label="Username" placeholder="Enter username">
             </div>
             <div class="form-group">
-                <label>Password:</label>
-                <input type="password" id="password" placeholder="Enter password">
+                <label for="password">Password:</label>
+                <input type="password" id="password" aria-label="Password" placeholder="Enter password">
             </div>
             <button onclick="login()" style="width: 100%; margin-top: 10px;">Login</button>
             <div id="loginMessage"></div>
