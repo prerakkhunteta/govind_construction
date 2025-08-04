@@ -860,7 +860,9 @@
 
         async function checkAuth() {
             try {
-                const response = await fetch('/api/check-auth');
+                const response = await fetch('/api/check-auth', {
+                    credentials: 'include'
+                });
                 const data = await response.json();
                 isAdmin = data.isAdmin;
                 updateUI();
@@ -900,6 +902,7 @@
                 const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
                     body: JSON.stringify({ username, password })
                 });
 
@@ -919,7 +922,10 @@
 
         async function logout() {
             try {
-                await fetch('/api/logout', { method: 'POST' });
+                await fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
                 isAdmin = false;
                 updateUI();
                 showMessage('Logged out successfully!', 'success');
@@ -1073,6 +1079,7 @@
                 const updateResponse = await fetch(`/api/houses/${editingHouse.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
                     body: JSON.stringify({ title, price, address, description, status })
                 });
 
@@ -1089,6 +1096,7 @@
 
                     const uploadResponse = await fetch('/api/upload', {
                         method: 'POST',
+                        credentials: 'include',
                         body: formData
                     });
 
@@ -1098,6 +1106,7 @@
                     await fetch(`/api/houses/${editingHouse.id}/images`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
                         body: JSON.stringify({ imageUrls: uploadData.imageUrls })
                     });
                 }
@@ -1197,6 +1206,7 @@
                 const houseResponse = await fetch('/api/houses', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
                     body: JSON.stringify({ title, price, address, description, status })
                 });
 
@@ -1211,6 +1221,7 @@
 
                     const uploadResponse = await fetch('/api/upload', {
                         method: 'POST',
+                        credentials: 'include',
                         body: formData
                     });
 
@@ -1220,6 +1231,7 @@
                     await fetch(`/api/houses/${house.id}/images`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
                         body: JSON.stringify({ imageUrls: uploadData.imageUrls })
                     });
                 }
@@ -1243,7 +1255,10 @@
             if (!confirm('Are you sure you want to delete this house?')) return;
 
             try {
-                await fetch(`/api/houses/${id}`, { method: 'DELETE' });
+                await fetch(`/api/houses/${id}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
                 loadHouses();
                 showMessage('House deleted successfully!', 'success');
             } catch (error) {
