@@ -11,11 +11,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // --- Middleware ---
-app.use(cors({ 
-    origin: process.env.NODE_ENV === 'production' 
-        ? ['https://yourdomain.com', 'https://www.yourdomain.com'] // Replace with your actual domain
+app.use(cors({
+    origin: process.env.NODE_ENV === 'production'
+        ? ['https://govindconstruction.me', 'https://www.govindconstruction.me'] // Your actual domain
         : ['http://localhost:5000', 'http://localhost:3000'],
-    credentials: true 
+    credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -28,7 +28,7 @@ app.use(session({
     secret: 'your-strong-secret-key',
     resave: false,
     saveUninitialized: true,
-    cookie: { 
+    cookie: {
         secure: process.env.NODE_ENV === 'production',
         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge: 24 * 60 * 60 * 1000 // 24 hours
